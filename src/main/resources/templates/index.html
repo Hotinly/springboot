@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Index.html</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<script src="/js/main.js"></script>
+</head>
+<body>
+	<h2>The page is render by thymeleaf render engine</h2>
+	<p th:text="'Hello, templates - index ' + ${name} + '!'" />
+	<p th:text="'Hello, ' + ${username} + '!'" />
+	<button onclick="test()">调用外部js</button>
+	<hr />
+</body>
+</html>

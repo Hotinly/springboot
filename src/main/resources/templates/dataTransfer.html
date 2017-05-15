@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Data Transfer</title>
+<script src="/js/jquery-2.0.0.min.js"></script>
+<script type="text/javascript">
+	/*<![CDATA[*/
+	function postData(){
+		var data = "number="+$('#nm').val() + "&quantity="+$('#qtt').val() + "&date="+$('#date').val();
+		$.ajax({
+			type: 'POST',
+			url: '/lab/postData',
+			data: data,
+			success: function(resp, status){
+				alert(JSON.stringify(resp) + "++" + status);
+			},
+			error: function(){
+				alert("ERROR1");
+			}
+		});
+	}
+	function postJson(){
+		var data = {
+			number: $('#nm').val(),
+			quantity: $('#qtt').val(),
+			date: $('#date').val(),
+		}
+		$.ajax({
+			type: 'POST',
+			url: '/lab/postJson',
+			contentType: 'application/json',
+			data: JSON.stringify(data),
+			success: function(resp, status){
+				alert(JSON.stringify(resp) + "++" + status);
+			},
+			error: function(){
+				alert("ERROR2");
+			}
+		});
+	}
+	/*]]>*/
+</script>
+</head>
+<body>
+	<p th:text="'Hello, ' + ${username} + '!'" />
+	
+	<h2>Test for front-end and back-end</h2>
+	<input id="nm" value="N0.12321"/><br />
+	<input id="qtt" value="20"/><br />
+	<input id="date" value="2017-05-12"/><br />
+	<button onclick="postData()">Post data</button><br />
+	<button onclick="postJson()">Post Json</button><br />
+	<hr />
+</body>
+</html>
