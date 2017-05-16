@@ -23,9 +23,15 @@ public class Lab {
 	private String name;
 	@Value("${user.description}")
 	private String description;
+	@Value("${spring.datasource.password}")
+	private String pwd;
+	@Value("${jdbc.driver}")
+	private String driver;
 
 	@RequestMapping("properties")
 	public String readByValue() {
+		System.out.println(pwd);
+		System.out.println(driver);
 		return name + ":" + description;
 	}
 	@Autowired
@@ -34,6 +40,7 @@ public class Lab {
 	public String readFromEnv(){
 		System.out.println("默认只能直接读取application.properties:" + env.getProperty("user.description"));
 		//@Configuration + @PropertySource("PATH") 把Properties文件信息添加到Environment中
+		System.out.println("读取新加入到Spring Environment中的配置文件data.properties:" + env.getProperty("spring.datasource.driver-class-name"));
 		return env.getProperty("spring.thymeleaf.cache");  
 	}
 	@Autowired
