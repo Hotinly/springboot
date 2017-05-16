@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.boot.spring.dao.OrderJPARepository;
+import com.boot.spring.dao.OrderJPADao;
 import com.boot.spring.entity.OrderJPA;
 
 @Controller
@@ -29,44 +29,48 @@ public class JPAController {
     }
 
 	@Autowired
-	private OrderJPARepository jpaRepo;
+	private OrderJPADao jpaDao;
 
 	@GetMapping("/getById")
 	public @ResponseBody OrderJPA getById(String id) {
-		return jpaRepo.findOne(id);
+		return jpaDao.getById(id);
 	}
 
 	@GetMapping("/findAll")
 	public @ResponseBody Object findAll() {
-		return jpaRepo.findAll();
+		return jpaDao.findAll();
 	}
 
 	@PostMapping("/insert")
 	public @ResponseBody String insert(@RequestBody OrderJPA orderJPA) {
-		OrderJPA entity = jpaRepo.save(orderJPA);
-		return "Insert: " + entity.getId();
+		try {
+			jpaDao.insert(orderJPA);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return "Insert";
 	}
 
 	@PostMapping("/update")
 	public @ResponseBody String update(@RequestBody OrderJPA orderJPA) {
-		OrderJPA entity = jpaRepo.save(orderJPA);
-		return "Insert: " + entity.getId();
+		jpaDao.update(orderJPA);
+		return "Update";
 	}
 
 	@PostMapping("/delById")
 	public @ResponseBody String delById(String id) {
-		jpaRepo.delete(id);
+		jpaDao.delById(id);
 		return "Delete";
 	}
 
 // JPA 高级查询 \\
 	@GetMapping("/like")
 	public @ResponseBody Object like(String orderNo) {
-		return jpaRepo.findAllByNoLike("%" + orderNo + "%");
+		return jpaDao.likeOrderNo("%" + orderNo + "%");
 	}
 
 	@GetMapping("/lessThan")
-	public @ResponseBody Object lessThan(int quantity) {
-		return jpaRepo.findAllByQuantityLessThan(quantity);
+	public @ResponseBody Object lessThanQuantity(int quantity) {
+		return jpaDao.lessThanQuantity(quantity);
 	}
 }
