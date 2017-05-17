@@ -23,10 +23,16 @@ public class OrderJPA {
 	@Column(name = "order_id", length = 36)
 	private String id;
 
+//	@NotNull
 	@JsonProperty("order_no")
-	@Column(name = "order_no", length = 3)
+	@Column(name = "order_no", length = 36)
 	private String no;
 
+//	Properties: spring.jpa.properties.hibernate.hbm2ddl.auto=update
+//	@Column(name = "order_nono", length = 3)
+//	private Date nono;
+
+//	@Transient
 	@JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss", timezone = "GMT+8")
 	// @Temporal(TemporalType.DATE)
 	@Column(name = "order_date")

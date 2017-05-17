@@ -2,6 +2,8 @@ package com.boot.spring.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -42,13 +44,15 @@ public class JPAController {
 	}
 
 	@PostMapping("/insert")
-	public @ResponseBody String insert(@RequestBody OrderJPA orderJPA) {
+	public @ResponseBody Map<String, String> insert(@RequestBody OrderJPA orderJPA) {
+		Map<String, String> map = new HashMap<>();
 		try {
 			jpaDao.insert(orderJPA);
+			map.put("id", orderJPA.getId());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "Insert";
+		return map;
 	}
 
 	@PostMapping("/update")
@@ -72,5 +76,19 @@ public class JPAController {
 	@GetMapping("/lessThan")
 	public @ResponseBody Object lessThanQuantity(int quantity) {
 		return jpaDao.lessThanQuantity(quantity);
+	}
+
+	@GetMapping("/aop")
+	@ResponseBody
+	public Map<String, String> aop(){
+		Map<String, String> map = new HashMap<>();
+		map.put("keyStr", "valueStr");
+		return map;
+	}
+
+	@GetMapping("/cut")
+	@ResponseBody
+	public String cut(){
+		return "Point cut";
 	}
 }
