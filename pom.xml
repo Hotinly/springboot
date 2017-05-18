@@ -5,7 +5,6 @@
 	<groupId>com.boot</groupId>
 	<artifactId>spring</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>
 
 	<name>spring</name>
 	<url>http://maven.apache.org</url>
