@@ -2,7 +2,7 @@ package com.boot.spring.entity;
 
 import java.util.Date;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class Order {
@@ -10,7 +10,7 @@ public class Order {
 	private String id;
 	@JsonProperty("order_no")
 	private String no;
-	@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss", timezone="GMT+8")
+//	@JsonFormat(pattern="yyyy-MM-dd hh:mm:ss", timezone="GMT+8")
 	private Date date;
 	private int quantity;
 	public String getId() {
