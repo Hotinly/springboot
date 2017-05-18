@@ -39,4 +39,25 @@ public class RedisController {
 	public OrderRedis test2(String id){
 		return dao.testRedis2(id);
 	}
+	@GetMapping("/testParams")
+	public String test3(String value){
+		redisTemplate.opsForValue().set("params:param:001", value);	//层级: params < param < params:param:001
+		return value;
+	}
+	@GetMapping("/testParams4")
+	public String test4(String value){
+		dao.testRedis4(value);
+		return redisTemplate.opsForValue().get("params:param:003");
+	}
+	@GetMapping("/testParams5")
+	public String test5(String value){
+		dao.testRedis5(value);
+		System.out.println(122);
+		return redisTemplate.opsForValue().get("testRedis5");
+	}
+	@GetMapping("/testParams6")
+	public String test6(String value){
+		dao.testRedis6(value);
+		return redisTemplate.opsForValue().get("zrange testRedis5~keys 0 -1"); //USELESS
+	}
 }

@@ -42,4 +42,18 @@ public class OrderRedisDao {
 		o.setQuantity(100);
 		return o;
 	}
+
+	@Cacheable(value = "params:param:002")
+	public String testRedis4(String value) {
+		return value;
+	}
+	@Cacheable(value = "testRedis5", condition = "#value.length() < 11")
+	public String testRedis5(String value) {
+		return value;
+	}
+	@Cacheable(value = "testRedis6", key = "'testRedis6_'+#value", condition = "#value.length() < 6")
+	public String testRedis6(String value) {
+		return value;
+	}
+
 }
