@@ -18,18 +18,18 @@ tr {
     var app = angular.module('app', []);
     app.controller('MainController', function($rootScope, $scope, $http) {
 
-        $scope.value = '刘冬';
+        $scope.value = 'Holy';
 
         $scope.setSession = function() {
             $http({
-                url : '/setSession?value=' + $scope.value,
+                url : '/nlb/setSession?value=' + $scope.value,
                 method : 'GET'
             });
         }
 
         $scope.getSession = function() {
             $http({
-                url : '/getSession',
+                url : '/nlb/getSession',
                 method : 'GET'
             }).success(function(r) {
                 $scope.sesssionId = r.sessionId

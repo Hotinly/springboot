@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-//@RequestMapping("/nlb")
+@RequestMapping("/nlb")  //URI http://localhost/nlb/
 public class NLBAndSessionController {
 
 	private static final String STR_SESSION_KEY = "name";
