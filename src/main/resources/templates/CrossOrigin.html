@@ -1,0 +1,53 @@
+<!-- Put the file in a web server -->
+<!DOCTYPE html>
+<html>
+    <head>
+      <meta charset="utf-8" />
+      <title>Test Cross</title>
+      <script src="js/jquery-2.0.0.min.js"></script>
+      <script type="text/javascript">
+        $(document).ready(function() {
+            $('#ss').click(function(){
+                alert('RUN');
+            })
+        
+            $('#crossOrigin').click(function(){
+                $.ajax({
+                    url:'http://localhost:8080/jdbc/findAll',
+                    type:'GET',
+                    async:true,
+                    timeout:5000,
+                    dataType:'json',    // json|xml|html|script|jsonp|text
+                    beforeSend:function(xhr){
+                        console.log(xhr)
+                        console.log('BEFORE')
+                    },
+                    success:function(data,textStatus,jqXHR){
+                        console.log('SUCCESS')
+                        console.log(data)
+                        console.log(textStatus)
+                        console.log(jqXHR)
+                        window.data = data;
+                        document.write(JSON.stringify(data, null, '</br>'));
+                        console.log(JSON.stringify(data, null, "\t"));
+                    },
+                    error:function(xhr,textStatus){
+                        console.log('ERROR')
+                        console.log(xhr)
+                        console.log(textStatus)
+                    },
+                    complete:function(){
+                        console.log('COMPLETE')
+                    }
+                });
+            });
+        });
+        </script>
+    </head>
+    <body>
+        <button id="crossOrigin">Cross Origin for => http://localhost:8080/jdbc/findAll</button>
+        <button id="ss">SS</button>
+    </body>
+    <h3>XMLHttpRequest cannot load http://localhost:8080/jdbc/findAll. </br>
+        No 'Access-Control-Allow-Origin' header is present on the requested resource. Origin 'http://127.0.0.1:8081' is therefore not allowed access.</h3>
+</html>

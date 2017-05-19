@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,6 +38,7 @@ public class JdbcController {
 	@Autowired
 	private OrderService orderService;
 	
+	@CrossOrigin(origins = {"http://localhost:8081", "http://127.0.0.1:8081"})
 	@RequestMapping("/findAll")
 	public @ResponseBody List<Order> findAll(){
 		return orderService.findAll();
