@@ -16,6 +16,14 @@ import com.boot.spring.entity.ServerMsg;
 @RequestMapping("/websocket")
 public class WebSocketController {
 
+	@RequestMapping("/init")
+	public String page2(HttpServletRequest request) {
+		request.getSession().setAttribute("userId", new Random().nextLong());
+		return "websocket2";
+	}
+
+
+//============↓↓↓↓============\\
 	@RequestMapping("/page")
 	public String page() {
 		return "websocket";
