@@ -78,7 +78,9 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
 		@Override
 		public void handleTransportError(WebSocketSession session, Throwable exception) throws Exception {
+			// 前台js如果不主动调用 WebSocket 的close方法，关闭连接，后台这里会有异常（java.io.IOException: 您的主机中的软件中止了一个已建立的连接。）
 			System.out.println("========HANDLETRANSPORTERROR========");
+			System.out.println("===="+exception.getMessage()+"====");
 			if (session.isOpen()) {
 				session.close();
 			}
@@ -109,8 +111,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 			// mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
 			Message msg = mapper.readValue(message.getPayload().toString(), Message.class);
 
-			// WebSocketSession wsSession =
-			// userSocketSessionMap.get(msg.getMsg_to()); //Normal
+			// WebSocketSession wsSession = userSocketSessionMap.get(msg.getMsg_to()); //Normal
 
 			Iterator<Entry<Long, WebSocketSession>> it = userSocketSessionMap.entrySet().iterator();
 			Entry<Long, WebSocketSession> entry = null;
@@ -136,7 +137,8 @@ public class WebSocketConfig implements WebSocketConfigurer {
 		@Override
 		public void afterConnectionClosed(WebSocketSession session, CloseStatus closeStatus) throws Exception {
 			System.out.println("========AFTERCONNECTIONCLOSED========");
-			System.out.println(session.isOpen());
+			// System.out.println(session.isOpen());  //false
+			System.out.println("===="+closeStatus.getCode()+":"+closeStatus.getReason()+"====");
 			Iterator<Entry<Long, WebSocketSession>> it = userSocketSessionMap.entrySet().iterator();
 			while (it.hasNext()) {
 				Entry<Long, WebSocketSession> entry = it.next();

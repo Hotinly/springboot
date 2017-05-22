@@ -190,14 +190,19 @@ input[type=button] {
 			sendMsg();
 		}
 	}
+
+	function closeConn(){
+		 websocket.close();
+		//websocket.close(1000, "User closed on purpose!");
+	}
 	/*]]>*/
 </script>
 </head>
 <body>
 	<div id="content"></div>
-	<input type="text" placeholder="请输入要发送的信息" id="msg" class="msg"
-		onkeydown="send(event)" />
+	<input type="text" placeholder="请输入要发送的信息" id="msg" class="msg" onkeydown="send(event)" />
 	<input type="button" value="发送" class="send" onclick="sendMsg()" />
 	<input type="button" value="清空" class="clear" onclick="clearAll()" />
+	<input type="button" value="关闭连接" onclick="closeConn()" />
 </body>
 </html>
