@@ -1,0 +1,86 @@
+Hibernate: select orderjpa0_.order_id as order_id1_0_0_, orderjpa0_.order_date as order_da2_0_0_, orderjpa0_.order_no as order_no3_0_0_, orderjpa0_.quantity as quantity4_0_0_ from t_order_jpa orderjpa0_ where orderjpa0_.order_id=?
+
+
+webjars 以jar包的形式来使用前端的各种框架、组件。
+http://www.webjars.org/
+1、 WebJars主官网 查找对于的组件，比如Vuejs
+<dependency>
+    <groupId>org.webjars.bower</groupId>
+    <artifactId>vue</artifactId>
+    <version>1.0.21</version>
+</dependency>
+
+2、页面引入
+<link th:href="@{/webjars/bootstrap/3.3.6/dist/css/bootstrap.css}" rel="stylesheet"></link>
+
+
+3、使用springloaded 实现java代码热部署
+https://github.com/spring-projects/spring-loaded
+http://wiselyman.iteye.com/blog/2146475
+
+<dependency>
+	<groupId>org.springframework</groupId>
+	<artifactId>springloaded</artifactId>
+	<version>1.2.7.RELEASE</version>
+</dependency>
+
+[Project] - Run - RunConfigurations - Java Application - [Project]-[Arguments]-[VM arguments]:
+-javaagent:D:\Programs\_Plugins_\m2\repository\org\springframework\springloaded\1.2.7.RELEASE\springloaded-1.2.7.RELEASE.jar -noverify
+
+4、配置 spring boot application.properties 实现 Thymeleaf页面自动更新
+#Allow Thymeleaf templates to be reloaded at dev time
+ spring.thymeleaf.cache: false			#!! 禁用模板缓存
+#server.tomcat.access_log_enabled: true
+#server.tomcat.basedir: target/tomcat
+spring-boot-devtools包 只是代替手动重启，Ctrl+s后自动重启，不算真正的热部署！
+
+5、Spring Data操作Redis时，发现key值出现 \xac\xed\x00\x05t\x00\tb
+http://stackoverflow.com/questions/39324717/spring-boot-caching-with-redis-key-have-xac-xed-x00-x05t-x00-x06
+http://stackoverflow.com/questions/13215024/weird-redis-key-with-spring-data-jedis
+http://blog.csdn.net/yiluoak_47/article/details/22041301
+
+
+2017-05-18 18:01:49.699  WARN 12660 --- [nio-8080-exec-2] .w.s.m.s.DefaultHandlerExceptionResolver : Failed to read HTTP message: org.springframework.http.converter.HttpMessageNotReadableException: Could not read JSON document: Can not deserialize value of type java.util.Date from String "2017-05-17 15:09:20": not a valid representation (error: Failed to parse Date value '2017-05-17 15:09:20': Can not parse date "2017-05-17 15:09:20Z": while it seems to fit format 'yyyy-MM-dd'T'HH:mm:ss.SSS'Z'', parsing fails (leniency? null))
+
+
+
+thymeleaf 页面可以随便放，解析器？		默认在/resources/templates下  QQ【梦】成都-伊始
+
+
+
+查看特定端口的使用情况  netstat  -aon|findstr  "80"
+根据PID号找到对应的程序 tasklist|findstr "2448"
+taskkill /im SQLyog.exe /f
+
+Spring Boot 部署与服务配置：
+http://www.open-open.com/lib/view/open1454043178870.html
+
+所有配置信息一览：
+http://blog.csdn.net/u011659172/article/details/50599451
+
+Spring boot 默认静态资源路径与手动配置访问路径
+http://www.cnblogs.com/dakewang/p/6824844.html
+
+
+============Starts=========================
+泥瓦匠BYSocket
+http://www.bysocket.com/?cat=72
+http://www.bysocket.com/?page_id=1639
+
+林祥纤
+http://412887952-qq-com.iteye.com/blog/2344171
+http://412887952-qq-com.iteye.com/category/356333
+
+swagger + springboot
+http://blog.csdn.net/u011493599/article/details/53931004
+http://blog.csdn.net/u014351782/article/details/52943717
+http://blog.didispace.com/springbootswagger2/
+
+翟永超
+http://blog.didispace.com/categories/Spring-Boot/page/4/
+
+嘟嘟独立博客
+http://tengj.top/2017/04/24/springboot0/
+
+============Starts=========================
+
