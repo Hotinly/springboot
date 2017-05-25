@@ -1,14 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8" />
+<title>Upload Status</title>
+</head>
 <body>
 
-<h1>Spring Boot - Upload Status</h1>
+	<h1>Spring Boot - Upload Status</h1>
 
 	<p th:text="'Hello, ' + ${session.user} + '!'" />
 	<p th:text="${session.describe}" />
 	<div th:if="${message}">
-    <h2 th:text="${message}"/>
-</div>
+		<h2 th:text="${message}" />
+	</div>
+	<img src="/ff01.jpg" alt="ff01.jpg" />
+	<h4>测试加载上传的文件，需刷新页面(properties中配置放开，配置eclipse自动刷新)</h4>
+	<a href="https://stackoverflow.com/questions/31892652/uploaded-image-does-not-display-until-i-refresh-the-page-spring-mvc">Eclipse 设置</a>
+	<br />
+	<img src="/QQqun2.jpg" alt="QQqun2.jpg" />测试文件
 
 </body>
 </html>
