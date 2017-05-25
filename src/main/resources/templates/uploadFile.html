@@ -4,7 +4,31 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <title>Index.html</title>
 <link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<script src="/js/jquery-2.0.0.min.js"></script>
 <script src="/js/main.js"></script>
+<script type="text/javascript">
+	$(function() {
+		$("#upload-file-input").on("change", ajaxUpload);
+	});
+	function ajaxUpload() {
+		$.ajax({
+			url : "/upload/single",
+			type : "POST",
+			data : new FormData($("#upload-file-form")[0]),
+			enctype : "multipart/form-data",
+			processData : false,
+			contentType : false,
+			cache : false,
+			success : function() {
+				alert("UPLOAD SUCCESS");
+			},
+			error : function() {
+				console.log(data);
+				alert("UPLOAD FAIL");
+			}
+		});
+	}
+</script>
 </head>
 <body>
 	<h2>Test File Upload</h2>
@@ -22,6 +46,11 @@
 		<input type="file" name="file2" />
 		<input type="file" name="file2" />
 		<input type="submit" value="提交2" />	
+	</form>
+	<hr />
+	<form id="upload-file-form">
+		<label for="upload-file-input">Upload with AJAX:</label>
+		<input id="upload-file-input" type="file" name="file" accept=".txt" />
 	</form>
 </body>
 </html>
