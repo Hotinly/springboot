@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Index.html</title>
+<link rel="stylesheet" type="text/css" href="/css/style.css"/>
+<script src="/js/main.js"></script>
+</head>
+<body>
+	<h2>Test File Upload</h2>
+	<p th:text="'Hello, ' + ${session.user} + '!'" />
+	<p th:text="${session.describe}" />
+	<button onclick="test()">调用外部js</button>
+	<hr />
+	<form action="/upload/single" method="post" enctype="multipart/form-data">
+		<input type="file" name="file" />
+		<input type="submit" value="提交" />	
+	</form>
+	<hr />
+	<form action="/upload/multiple" method="post" enctype="multipart/form-data">
+		<input type="file" name="file2" />
+		<input type="file" name="file2" />
+		<input type="file" name="file2" />
+		<input type="submit" value="提交2" />	
+	</form>
+</body>
+</html>
