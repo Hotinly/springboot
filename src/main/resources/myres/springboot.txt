@@ -1,3 +1,11 @@
+
+
+
+
+springboot jpa 实体类中的 Boolean 类型， 通过 jpa 生成的表，里面的数据类型 怎么显示为‘bit’?
+在数据库里把它改成 boolean 后，自动变成 tinyint 了
+
+
 Hibernate: select orderjpa0_.order_id as order_id1_0_0_, orderjpa0_.order_date as order_da2_0_0_, orderjpa0_.order_no as order_no3_0_0_, orderjpa0_.quantity as quantity4_0_0_ from t_order_jpa orderjpa0_ where orderjpa0_.order_id=?
 
 
