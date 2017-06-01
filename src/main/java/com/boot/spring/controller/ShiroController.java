@@ -1,9 +1,14 @@
 package com.boot.spring.controller;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
+import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,12 +23,12 @@ public class ShiroController {
 	}
 
 	@GetMapping("/login")
-	public String login(){
+	public String login() {
 		return "login";
 	}
-	
+
 	@PostMapping("/login")
-	public String login(HttpServletRequest request) {
+	public String login(HttpServletRequest request, Map<String, String> map) {
 		String exception = (String) request.getAttribute("shiroLoginFailure");
 		String msg = "";
 		if (exception != null) {
@@ -52,8 +57,35 @@ public class ShiroController {
 				System.out.println("else -- >" + exception);
 
 			}
+			map.put("msg", msg);
+			return "login";
 		}
-
+		map.put("msg", "Login success!");
 		return "index";
+	}
+
+	@GetMapping("/403")
+	public String unAuthorized() {
+		return "403";
+	}
+
+	@GetMapping("/userList")
+//	@RequiresRoles("vip")  //角色管理
+	@RequiresRoles(value={"admin", "vip"}, logical= Logical.OR)
+	@RequiresPermissions("userInfo:view") // 权限管理;
+	public String userInfo() {
+		return "userInfo";
+	}
+
+	@GetMapping("/userAdd")
+	@RequiresPermissions("userInfo:add") // 权限管理;
+	public String userInfoAdd() {
+		return "userInfoAdd";
+	}
+
+	@GetMapping("/userDel")
+	@RequiresPermissions("userInfo:del") // 权限管理;
+	public String userInfoDel() {
+		return "userInfoDel";
 	}
 }

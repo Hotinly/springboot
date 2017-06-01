@@ -90,6 +90,10 @@ public class UserInfo {
 		this.roleList = roleList;
 	}
 
+	public String getCredentialsSalt() {
+		return this.username + this.salt;
+	}
+
 	@Override
 	public String toString() {
 		final int maxLen = 10;

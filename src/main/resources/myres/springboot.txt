@@ -1,6 +1,31 @@
 
 
+shiro使用： http://412887952-qq-com.iteye.com/blog/2299777	
+1、引包： shiro-spring
+2、ShiroConfig 中注入 ShiroFilterFactoryBean(Shiro 核心通过 Filter 来实现,类似于DispachServlet，通过URL规则来进行过滤和权限校验) 
+					1）定义拦截器 Map<String,String> filterChainDefinitionMap;  anon:所有url都都可以匿名访问; authc: 需要认证才能进行访问; user:配置记住我或认证通过可以访问；
+					2）必须设置 shiroFilterFactoryBean.setSecurityManager(securityManager); setFilterChainDefinitionMap(filterChainDefinitionMap); 并设置 setLoginUrl("/login"), setSuccessUrl("")...
+				和    SecurityManager( new DefaultWebSecurityManager() )  !
+3、身份认证：
+	认证、授权内部实现机制中都将交给Real进行处理。最终是通过Realm来获取应用程序中的用户、角色及权限信息。通常情况下，在Realm中会直接从数据源中获取Shiro需要的验证信息。可以说，Realm是专用于安全框架的DAO. 
+	自定义一个Realm类，继承AuthorizingRealm抽象类，重写抽象方法 doGetAuthenticationInfo(token) 和 doGetAuthorizationInfo(principals)
+	myShiroRealm注入到securityManager中  securityManager.setRealm(myShiroRealm());
+4、权限控制：
+	至此，身份认证ok,但权限管理 doGetAuthorizationInfo() 不会执行。需要：
+	1）在config中开启shiro aop注解支持。    new AuthorizationAttributeSourceAdvisor()  .setSecurityManager(securityManager);
+	2）在controller方法中加入相应的注解，如：@RequiresPermissions("userInfo:add")  @RequiresPermissions("userInfo:del") 当前用户角色对应的权限
+5、Shiro缓存：
+	详见：http://blog.csdn.net/xtiawxf/article/details/52583448?utm_source=itdadao&utm_medium=referral
+	加入缓存后，当前用户首次访问权限页面时会自动缓存权限信息，不需要每次调用 MyShiroRealm.doGetAuthorizationInfo(PrincipalCollection)
+	1）pom 中加入 shiro-ehcache
+	2）Config中注入缓存  new EhCacheManager();  .setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");  xml方式配置。
+	3）注入到 SecurityManager中，   securityManager.setCacheManager(ehCacheManager());
+	4）++ 在config中的 MyShiroRealm bean 中开启缓存，并启用(Authentication &| Authorization)和设置需要缓存的对象(xml文件中对应 name 的 cache)，
 
+JPA的命名策略: spring.jpa.hibernate.naming-strategy
+spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.DefaultNamingStrategy	--表名、字段为小写，(实体类)当有大写字母的时候会转换为分隔符号“_”
+spring.jpa.hibernate.naming-strategy=org.hibernate.cfg.ImprovedNamingStrategy   --直接映射，不做处理
+@Column(name="work_location")	private String workLocation;	--这种以注解为主
 
 springboot jpa 实体类中的 Boolean 类型， 通过 jpa 生成的表，里面的数据类型 怎么显示为‘bit’?
 在数据库里把它改成 boolean 后，自动变成 tinyint 了
