@@ -43,7 +43,7 @@
            maxEntriesLocalHeap="2000"
            eternal="false"
            timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
+           timeToLiveSeconds="10"
            overflowToDisk="false"
            statistics="true">
     </cache>
@@ -52,7 +52,7 @@
            maxEntriesLocalHeap="2000"
            eternal="false"
            timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
+           timeToLiveSeconds="20"
            overflowToDisk="false"
            statistics="true">
     </cache>
@@ -61,13 +61,14 @@
            maxEntriesLocalHeap="2000"
            eternal="false"
            timeToIdleSeconds="3600"
-           timeToLiveSeconds="0"
+           timeToLiveSeconds="30"
            overflowToDisk="false"
            statistics="true">
     </cache>
 
 
 <!-- 
+    只用authorizationCache 生效？？
     比如登陆后，1小时不刷新页面，session会自动失效(timeToIdleSeconds=”3600”)
     前段获取角色、权限等信息，第一次获取时，回去数据库查询(发出sql语句)，在有效时间内，再次获取时，直接从缓存中获取。
   http://blog.csdn.net/xtiawxf/article/details/52583448?utm_source=itdadao&utm_medium=referral

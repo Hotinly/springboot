@@ -12,6 +12,7 @@ import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ShiroController {
@@ -29,6 +30,11 @@ public class ShiroController {
 
 	@PostMapping("/login")
 	public String login(HttpServletRequest request, Map<String, String> map) {
+		// UsernamePasswordToken token = new UsernamePasswordToken("", "");
+		// Subject subject = SecurityUtils.getSubject();
+		// subject.login(token);
+		// Session session = subject.getSession();
+		// session.setAttribute("token", token);
 		String exception = (String) request.getAttribute("shiroLoginFailure");
 		String msg = "";
 		if (exception != null) {
@@ -62,11 +68,6 @@ public class ShiroController {
 		}
 		map.put("msg", "Login success!");
 		return "index";
-	}
-
-	@GetMapping("/403")
-	public String unAuthorized() {
-		return "403";
 	}
 
 	@GetMapping("/userList")

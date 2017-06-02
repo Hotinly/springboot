@@ -9,8 +9,12 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
+import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
+import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
+import org.springframework.boot.web.servlet.ErrorPage;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpStatus;
 
 import com.boot.spring.service.MyShiroRealm;
 
@@ -47,6 +51,8 @@ public class ShiroConfig {
 		// 过滤链定义，从上向下顺序执行，一般将 /**放在最下边
 		filterChainDefinitionMap.put("/reg", "anon");  //anon 可以理解为不拦截
 		filterChainDefinitionMap.put("/about", "anon");
+		//在该url上加访问权限控制，对于没权限的用户，会跳转到403,说明它确实走了Unauthorized，但是直接在controller上的注解没搞定
+		filterChainDefinitionMap.put("/userAdd", "authc, roles[admin]");
 		filterChainDefinitionMap.put("/**", "authc");
 
 		shiroFilterFactoryBean.setFilterChainDefinitionMap(filterChainDefinitionMap);
@@ -103,4 +109,20 @@ public class ShiroConfig {
 		ehCacheManager.setCacheManagerConfigFile("classpath:config/ehcache-shiro.xml");
 		return ehCacheManager;
 	}
+
+	// 定制错误处理
+	@Bean
+	public EmbeddedServletContainerCustomizer containerCustomizer() {
+		return new EmbeddedServletContainerCustomizer() {
+
+			@Override
+			public void customize(ConfigurableEmbeddedServletContainer container) {
+				container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/403"));
+				container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
+				container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/500"));
+			}
+		};
+	}
+
+
 }

@@ -7,6 +7,8 @@
 <script src="/js/main.js"></script>
 </head>
 <body>
+	<p th:text="${msg}" />
+	<p th:text="${sessionId}" />
 	<h2>The page is render by thymeleaf render engine</h2>
 	<p th:text="'Hello, templates - index ' + ${name} + '!'" />
 	<p th:text="'Hello, ' + ${username} + '!'" />
